@@ -8,65 +8,48 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import recycleviewdemo.zhoujian.com.recycleviewdemo.R;
+import recycleviewdemo.zhoujian.com.recycleviewdemo.bean.Person;
 
-public class StaggeredHomeAdapter extends
-		RecyclerView.Adapter<StaggeredHomeAdapter.MyViewHolder>
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder>
 {
 
-	private List<String> mDatas;
+	private ArrayList<Person> mDatas;
 	private LayoutInflater mInflater;
-
-	private List<Integer> mHeights;
+	private OnItemClickLitener mOnItemClickLitener;
 
 	public interface OnItemClickLitener
 	{
 		void onItemClick(View view, int position);
-
 		void onItemLongClick(View view, int position);
 	}
-
-	private OnItemClickLitener mOnItemClickLitener;
 
 	public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener)
 	{
 		this.mOnItemClickLitener = mOnItemClickLitener;
 	}
+	
 
-	public StaggeredHomeAdapter(Context context, List<String> datas)
+	public MainAdapter(Context context, ArrayList<Person> datas)
 	{
 		mInflater = LayoutInflater.from(context);
 		mDatas = datas;
-
-		mHeights = new ArrayList<Integer>();
-		for (int i = 0; i < mDatas.size(); i++)
-		{
-			mHeights.add( (int) (100 + Math.random() * 300));
-		}
 	}
 
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
 	{
 		MyViewHolder holder = new MyViewHolder(mInflater.inflate(
-				R.layout.item_staggered_home, parent, false));
+				R.layout.item_home, parent, false));
 		return holder;
 	}
 
 	@Override
 	public void onBindViewHolder(final MyViewHolder holder, final int position)
 	{
-		LayoutParams lp = holder.tv.getLayoutParams();
-		lp.height = mHeights.get(position);
-		
-		holder.tv.setLayoutParams(lp);
-		holder.tv.setText(mDatas.get(position));
+		holder.tv.setText(mDatas.get(position).getName());
 
 		// 如果设置了回调，则设置点击事件
 		if (mOnItemClickLitener != null)
@@ -80,7 +63,7 @@ public class StaggeredHomeAdapter extends
 					mOnItemClickLitener.onItemClick(holder.itemView, pos);
 				}
 			});
-
+			
 			holder.itemView.setOnLongClickListener(new OnLongClickListener()
 			{
 				@Override
@@ -101,13 +84,6 @@ public class StaggeredHomeAdapter extends
 		return mDatas.size();
 	}
 
-	public void addData(int position)
-	{
-		mDatas.add(position, "Insert One");
-		mHeights.add( (int) (100 + Math.random() * 300));
-		notifyItemInserted(position);
-	}
-
 	public void removeData(int position)
 	{
 		mDatas.remove(position);
@@ -118,7 +94,6 @@ public class StaggeredHomeAdapter extends
 	{
 
 		TextView tv;
-
 		public MyViewHolder(View view)
 		{
 			super(view);

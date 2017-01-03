@@ -4,24 +4,6 @@
     tools:context="com.zhy.sample.demo_recyclerview.MainActivity" >
 
     <item
-        android:id="@+id/id_action_add"
-        android:icon="@mipmap/actionbar_add_icon"
-        android:orderInCategory="100"
-        android:title="add"
-        app:showAsAction="ifRoom">
-    </item>
-    <item
-        android:id="@+id/id_action_delete"
-        android:icon="@mipmap/ic_menu_delete"
-        android:orderInCategory="100"
-        android:title="delete"
-        app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/id_action_gridview"
-        android:orderInCategory="100"
-         android:title="GirdView"
-        app:showAsAction="never"/>
-    <item
         android:id="@+id/id_action_listview"
         android:orderInCategory="100"
          android:title="ListView"
